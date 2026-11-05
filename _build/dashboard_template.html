@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Green Riyadh AIoT Smart Irrigation – Project Dashboard</title>
+<style>
+:root{--g1:#0b3d20;--g2:#1b5e20;--g3:#2e7d32;--g4:#66bb6a;--g5:#e8f5e9;--g6:#f4faf4;--ink:#1a2a1d;--mut:#5b6e5f;--amber:#f9a825;--red:#c62828;--blue:#1565c0}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--g6);font-size:14px}
+header{background:linear-gradient(135deg,var(--g1),var(--g3));color:#fff;padding:26px 32px}
+header h1{margin:0 0 6px;font-size:26px}header p{margin:4px 0;max-width:1100px;opacity:.95}
+.tag{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:3px 10px;margin:6px 6px 0 0;font-size:12px}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #d7e8d7;padding:8px 32px;display:flex;gap:14px;flex-wrap:wrap}
+nav a{color:var(--g2);text-decoration:none;font-weight:600;font-size:13px}nav a:hover{text-decoration:underline}
+main{padding:20px 32px;max-width:1400px;margin:auto}
+section{background:#fff;border:1px solid #d7e8d7;border-radius:10px;padding:18px 20px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+h2{margin:0 0 12px;color:var(--g2);font-size:19px}h3{color:var(--g3);font-size:15px;margin:14px 0 8px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:20px}
+.card{background:#fff;border:1px solid #d7e8d7;border-left:6px solid var(--g4);border-radius:10px;padding:14px 16px}
+.card .n{font-size:32px;font-weight:800;color:var(--g2)}.card .l{color:var(--mut);font-size:13px}
+.design{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.design div{background:var(--g5);border-radius:8px;padding:10px 12px}.design b{display:block;color:var(--g2)}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px solid #e3efe3;padding:7px 8px;text-align:left;vertical-align:top}
+th{background:var(--g5);color:var(--g1);cursor:default;white-space:nowrap}tr:hover td{background:#fafdf9}
+.tw{overflow-x:auto}
+#metab{table-layout:fixed;min-width:1100px}#metab th:nth-child(1){width:44px}#metab th:nth-child(2){width:34%}#metab th:nth-child(3){width:13%}#metab th:nth-child(4){width:9%}#metab th:nth-child(5){width:52px}#metab th:nth-child(6){width:90px}#metab th:nth-child(7){width:11%}#metab th:nth-child(8){width:12%}#metab td{word-wrap:break-word;overflow-wrap:anywhere}#metab td .b{white-space:normal}#metab td .hi,#metab td .med,#metab td .lo{white-space:nowrap}
+.b{display:inline-block;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:700;white-space:nowrap}
+.yes{background:#c8e6c9;color:#1b5e20}.part{background:#fff3c4;color:#8a6d00}.no{background:#fde0e0;color:#a31515}.unk{background:#eceff1;color:#455a64}
+.hi{background:#1b5e20;color:#fff}.med{background:#81c784;color:#0b3d20}.lo{background:#e0e0e0;color:#424242}
+.c-sa{background:#006c35;color:#fff}.c-gcc{background:#00796b;color:#fff}.c-me{background:#5d4037;color:#fff}.c-ot{background:#b0bec5;color:#263238}
+.open{background:#1565c0;color:#fff}.req{background:#ffe082;color:#5d4100}.none{background:#eeeeee;color:#616161}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+input,select{padding:8px 10px;border:1px solid #b9d7b9;border-radius:6px;font-size:13px;background:#fff}input{flex:1;min-width:220px}
+.hl{border:2px solid #006c35;background:linear-gradient(180deg,#f0fbf3,#fff)}
+.hl h2:before{content:"★ ";color:var(--amber)}
+.mecards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.mec{border:1px solid #cfe5d3;border-radius:8px;padding:12px;background:#fff}.mec h4{margin:4px 0 6px;font-size:14px}.mec p{margin:4px 0;font-size:12.5px;color:#33443a}
+.mec a{color:var(--blue)}a{color:var(--blue)}
+.req-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.req-item{border:1px solid #d7e8d7;border-radius:8px;padding:10px 12px}.req-item b{color:var(--g2)}
+.bar{height:8px;background:#e8f0e8;border-radius:4px;margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--g4)}
+ul.gaps li{margin:6px 0}.files a{display:inline-block;margin:4px 10px 4px 0}
+small.m{color:var(--mut)}footer{text-align:center;color:var(--mut);padding:20px;font-size:12px}
+@media(max-width:700px){header,main,nav{padding-left:14px;padding-right:14px}header h1{font-size:21px}}
+</style></head><body>
+<header>
+<h1>🌴 Green Riyadh AIoT Smart Irrigation – Project Dashboard</h1>
+<p>Pilot study testing whether AIoT irrigation recommendations reduce applied water (L/m²/day) without harming plant condition in Riyadh urban green spaces.</p>
+<p><span class="tag">24 zones · 12 matched pairs</span><span class="tag">4-wk baseline + 8-wk intervention</span><span class="tag">2,016 zone-days</span><span class="tag">Difference-in-differences</span><span class="tag">Pairs = replicates (no pseudoreplication)</span></p>
+<p><small>Updated __TODAY__ · All sources public · Nobody has been contacted</small></p>
+</header>
+<nav><a href="#design">Design</a><a href="#req">R1–R5</a><a href="#me">Middle East research</a><a href="#irr">Irrigation datasets</a><a href="#iot">IoT datasets</a><a href="#contacts">Contacts</a><a href="#gaps">Gaps &amp; next steps</a><a href="#files">Files</a></nav>
+<main>
+<div class="cards" id="cards"></div>
+<section id="design"><h2>Study design</h2><div class="design">
+<div><b>Units</b>24 irrigation zones in 12 matched pairs (treatment = AIoT recommendation, control = standard practice)</div>
+<div><b>Timeline</b>4-week baseline (both arms standard) then 8-week intervention</div>
+<div><b>Primary outcome</b>Metered applied water, L/m²/day per zone-day</div>
+<div><b>Secondary outcome</b>Plant condition (120 tagged plants, ~1,440 visits)</div>
+<div><b>Analysis</b>DiD with pair as replicate (n = 12), not zone-days (Hurlbert pseudoreplication)</div>
+<div><b>Data files</b>zone register · daily zone-day file · sensor_log (~48,384 hourly readings / parameter) · irrigation_events · plant_health</div>
+</div></section>
+<section id="req"><h2>Data requirements R1–R5: coverage in public sources</h2><div class="req-list" id="reqlist"></div>
+<p><small class="m">Coverage = share of the 12 ranked irrigation datasets with full (Yes) coverage; partial counted as half.</small></p></section>
+<section id="me" class="hl"><h2>Middle East university research (new this run)</h2>
+<p>__NME__ items from Saudi Arabia, UAE, Oman, Qatar, Kuwait, Lebanon, Jordan, Egypt, Türkiye, Israel, Iran and Morocco. Saudi items first. Relevance is to this pilot specifically.</p>
+<h3>Highlights: Saudi Arabia &amp; Gulf</h3><div class="mecards" id="mecards"></div>
+<h3>All items</h3>
+<div class="controls"><input id="meq" placeholder="Search title, author, university, note…"><select id="mec"><option value="">All countries</option></select><select id="mer"><option value="">All relevance</option><option>High</option><option>Medium</option><option>Low</option></select><select id="med"><option value="">All data availability</option><option value="open">Open</option><option value="req">On request</option><option value="none">None / unknown</option></select></div>
+<div class="tw"><table id="metab"><thead><tr><th>#</th><th>Title / authors</th><th>University</th><th>Country</th><th>Year</th><th>Relevance</th><th>Data</th><th>Email</th><th>Check</th></tr></thead><tbody></tbody></table></div>
+<h3>Open Middle East / North Africa datasets</h3>
+<div class="tw"><table id="medstab"><thead><tr><th>Dataset</th><th>Country</th><th>Licence</th><th>Note</th></tr></thead><tbody></tbody></table></div>
+<p><b>No open Saudi or GCC plot-level irrigation dataset was found.</b> Saudi papers either offer data on request or publish none.</p>
+</section>
+<section id="irr"><h2>Public irrigation / urban-greening datasets (12, ranked)</h2>
+<div class="controls"><input id="irq" placeholder="Search name, setting, country…"><select id="irf"><option value="">Any coverage</option><option value="r1">Has R1 (metered water)</option><option value="r4">Has R4 (plant condition)</option><option value="r5">Has R5 (design/logs)</option></select></div>
+<div class="tw"><table id="irtab"><thead><tr><th>Rank</th><th>Dataset</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th><th>Setting</th><th>Country</th></tr></thead><tbody></tbody></table></div></section>
+<section id="iot"><h2>Public IoT-in-agriculture datasets (17)</h2>
+<div class="controls"><input id="ioq" placeholder="Search…"><select id="iof"><option value="">All categories</option></select></div>
+<div class="tw"><table id="iotab"><thead><tr><th>#</th><th>Dataset</th><th>Category</th><th>Country</th><th>Licence</th></tr></thead><tbody></tbody></table></div></section>
+<section id="contacts"><h2>Contacts (public sources; nobody contacted)</h2>
+<div class="controls"><input id="coq" placeholder="Search person, organisation, email…"><select id="cof"><option value="">All groups</option></select></div>
+<div class="tw"><table id="cotab"><thead><tr><th>Person</th><th>Organisation</th><th>Group / paper</th><th>Contact</th><th>Confidence</th></tr></thead><tbody></tbody></table></div>
+<p><small class="m">Full details, LinkedIn and routes: <a href="contacts/authors_contacts.md">contacts/authors_contacts.md</a> (<a href="contacts/authors_contacts.pdf">PDF</a>).</small></p></section>
+<section id="gaps"><h2>Gaps &amp; next steps</h2><ul class="gaps">
+<li><b>No public paired smart-vs-standard metered urban zones</b> anywhere (closest: NC State homes, Orange County homes, Melbourne turf arms).</li>
+<li><b>No open Saudi/GCC irrigation, soil-moisture or plant-condition data.</b> KSU (S1, S2) and Shaqra (S11) offer data on request; others publish none.</li>
+<li><b>No public recommendation / override logs</b> (R5): SIMPaCT and Frankfurt describe them but do not release them.</li>
+<li><b>Regional effect-size priors:</b> landscape controllers saved ~6–15% (Tehran park, IR1), ~21–26% (Dubai, U1), 18–25% (KSU ET controllers, S4); historic Riyadh over-irrigation 23–33 vs 15 L/m²/day (S3). Use for the 12-pair power calculation.</li>
+<li><b>Next:</b> (1) request KSU PCMT site data (Alazba/Elkatoury) as the ET comparator; (2) request KFU date-palm sensor logs (memohammed@kfu.edu.sa); (3) prototype sensor_log + ET0 pipeline with the open Souss-Massa dataset and NCM Riyadh weather; (4) build a hybrid test set (Apulia metered schema, Melbourne treatments, DigiWaVe trees); (5) obtain NCM API credentials for Riyadh station.</li>
+</ul></section>
+<section id="files"><h2>Project files</h2><div class="files">
+<a href="README.md">README.md</a>
+<a href="research/middle_east_research.md">research/middle_east_research.md</a><a href="research/middle_east_research.pdf">(PDF)</a>
+<a href="data-sources/irrigation_data_sources.html">data-sources/irrigation_data_sources.html</a><a href="data-sources/irrigation_data_sources.md">(MD)</a><a href="data-sources/irrigation_data_sources.pdf">(PDF)</a>
+<a href="data-sources/iot_agriculture_datasets.html">data-sources/iot_agriculture_datasets.html</a><a href="data-sources/iot_agriculture_datasets.md">(MD)</a><a href="data-sources/iot_agriculture_datasets.pdf">(PDF)</a>
+<a href="contacts/authors_contacts.md">contacts/authors_contacts.md</a><a href="contacts/authors_contacts.pdf">(PDF)</a>
+<a href="docs/Green_Riyadh_requirements.pdf">docs/Green_Riyadh_requirements.pdf</a>
+</div></section>
+</main>
+<footer>Green Riyadh AIoT pilot · project dashboard · self-contained HTML (no external scripts)</footer>
+<script>
+/*__DATA__*/
+const CONTACTS=[
+["Dr Morgan Abily (corr.)","Université Côte d'Azur, Géoazur","Gasser et al. 2024","abily@geoazur.unice.fr","Page"],
+["Franck Le Gall","EGM (Valbonne)","Gasser et al. 2024","franck.le-gall@egm.io; +33 6 20 03 54 20","Page"],
+["L. Gasser","EGM","Gasser et al. 2024","none public","—"],
+["Assoc. Prof. Oliver Obst (corr.)","UNSW Sydney (ex-WSU)","SIMPaCT","o.obst@unsw.edu.au","Page"],
+["Prof. Sebastian Pfautsch","Western Sydney University","SIMPaCT","S.Pfautsch@westernsydney.edu.au","Page"],
+["Prof. Bahman Javadi","Western Sydney University","SIMPaCT","not found","—"],
+["Mesut Koçyiğit","NSW DCCEEW (apparently)","SIMPaCT","none public","—"],
+["Russell Thomson","The Analytical Edge","SIMPaCT","not searched","—"],
+["Prof. Dr Henner Gimpel","Uni Hohenheim / FIM","Frankfurt trees","henner.gimpel@fim-rc.de; +49 711 459 24051","Page"],
+["Feline Schnaak","FIM / Fraunhofer FIT","Frankfurt trees","feline.schnaak@fim-rc.de","Page"],
+["Dominik Rebholz","NEWS project","Frankfurt trees","no confirmed email","—"],
+["Dr Valerie Graf-Drasch","Uni Hohenheim","Frankfurt trees","valerie.graf-drasch@uni-hohenheim.de","Snippet (unverified)"],
+["Dr Garry L. Grabow","NC State BAE","Nautiyal et al. 2015","glgrabow@ncsu.edu; 919-515-8242","Page"],
+["Rodney Huffman","NC State BAE","Nautiyal et al. 2015","huffman@ncsu.edu","Page"],
+["Grady Miller","NC State Crop & Soil","Nautiyal et al. 2015","grady_miller@ncsu.edu","Snippet"],
+["Daniel Bowman","NC State (retired)","Nautiyal et al. 2015","dan_bowman@ncsu.edu","Snippet"],
+["M. Nautiyal","former grad student","Nautiyal et al. 2015","none public","—"],
+["Dr Paul Cheung (corr.)","ex-WSU / Univ. Melbourne","Melbourne Burnley turf","cheung.p@unimelb.edu.au","Probably stale"],
+["Prof. Stephen Livesley","University of Melbourne","Melbourne Burnley turf","sjlive@unimelb.edu.au","Page"],
+["Dr Kerry Nice","University of Melbourne","Melbourne Burnley turf","kerry.nice@unimelb.edu.au","Page (may have moved)"],
+["Dr Naika Meili","NUS","Melbourne Burnley turf","none found","—"],
+["Tobias Freund","Masasana AI","DigiWaVe","info@masasana.ai; +49 2161 9850742","Page"],
+["Dr.-Ing. Ulf Miehe","Kompetenzzentrum Wasser Berlin","DigiWaVe","ulf.miehe@kompetenz-wasser.de; +49 30 53 653 821","Page"],
+["Dr Maged Mohammed (corr.)","King Faisal University, Al-Ahsa","ME: S5, S6, S7","memohammed@kfu.edu.sa","Page (MDPI PDF, IntechOpen)"],
+["Prof. A.A. Alazba / Dr Ahmed Elkatoury","King Saud University","ME: S1, S2","not captured","—"],
+["Dr Hussein M. Al-Ghobari","King Saud University","ME: S4","not captured","—"],
+["Jiaqi Zheng","KAUST","ME: S9","not captured","—"],
+["S. Habib (corr.)","Qassim University","ME: S8","not captured","—"],
+["Marran Al Qwaid","Shaqra University","ME: S11","not captured","—"],
+["Dr Yaseen A. Al-Mulla (corr.)","Sultan Qaboos University","ME: O1","not captured","—"],
+["Sara M. Zaina (corr.) / Dr Fodil Fadli","Qatar University","ME: Q1","not captured","—"],
+["Dr Hadi H. Jaafar","American University of Beirut","ME: L1","not captured","—"],
+["Yasser Arafa","Ain Shams University","ME: E1","not captured","—"],
+["Hamza Ait-Ichou (corr.)","Ibn Zohr University","ME: M1 (open data)","not needed","—"]];
+const $=s=>document.querySelector(s), esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const GCC=["UAE","Oman","Qatar","Kuwait","Bahrain"];
+function cb(c){const k=c.startsWith("Saudi")?"c-sa":GCC.some(g=>c.startsWith(g))?"c-gcc":"c-me";return `<span class="b ${k}">${esc(c)}</span>`}
+function dclass(d){d=d.toLowerCase();return d.startsWith("open")||d.includes("portal data open")?"open":d.includes("request")?"req":"none"}
+function db(d){return `<span class="b ${dclass(d)}">${esc(d)}</span>`}
+function rb(r){return `<span class="b ${r=="High"?"hi":r=="Medium"?"med":"lo"}">${r}</span>`}
+function cov(v){const k=v=="Yes"?"yes":v=="Part"?"part":v=="No"?"no":"unk";return `<span class="b ${k}">${esc(v)}</span>`}
+// cards
+const nContacts=CONTACTS.length, nOpenME=DATA.meds.length;
+$("#cards").innerHTML=[["12","Irrigation / urban-greening datasets"],["17","IoT-in-agriculture datasets"],[DATA.me.length,"Middle East research items"],[DATA.me.filter(m=>m.country.startsWith("Saudi")).length,"of which Saudi"],[nOpenME,"Open ME/N. Africa datasets"],[nContacts,"Contacts (public)"]].map(([n,l])=>`<div class="card"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+// R1-R5
+const RQ=[["r1","R1 Metered water","Litres per zone with zone area; missing ≠ zero"],["r2","R2 Soil moisture","Hourly, sensor_id, unit, quality flag"],["r3","R3 Weather & ET0","Daily/hourly weather and reference ET"],["r4","R4 Plant condition","Tagged-plant scores / health visits"],["r5","R5 Design & logs","Pairs, phase, recommendation vs override"]];
+$("#reqlist").innerHTML=RQ.map(([k,t,d])=>{const y=DATA.irr.filter(x=>x[k]=="Yes").length,p=DATA.irr.filter(x=>x[k]=="Part").length,pc=Math.round((y+p/2)/12*100);
+ const st=pc>=60?"Well covered":pc>=35?"Partly covered":"Gap";return `<div class="req-item"><b>${t}</b><br><small class="m">${d}</small><br>${y} Yes · ${p} Partial of 12 — <b>${st}</b><div class="bar"><i style="width:${pc}%"></i></div></div>`}).join("");
+// ME highlights
+const HL=["S1","S2","S3","S9","S5","S4","O1","O2","U1"];
+$("#mecards").innerHTML=HL.map(id=>DATA.me.find(m=>m.id==id)).map(m=>`<div class="mec">${cb(m.country)} ${rb(m.rel)} ${db(m.data)}<h4><a href="${m.url}" target="_blank" rel="noopener">${esc(m.title)}</a></h4><p><b>${esc(m.uni)}</b> · ${m.year||"n.d."} · ${esc(m.venue)}</p><p>${esc(m.note)}</p></div>`).join("");
+// ME table
+const ctry=[...new Set(DATA.me.map(m=>m.country))];ctry.forEach(c=>$("#mec").insertAdjacentHTML("beforeend",`<option>${esc(c)}</option>`));
+function rme(){const q=$("#meq").value.toLowerCase(),c=$("#mec").value,r=$("#mer").value,d=$("#med").value;
+ const ord={High:0,Medium:1,Low:2};const rows=DATA.me.filter(m=>(!q||JSON.stringify(m).toLowerCase().includes(q))&&(!c||m.country==c)&&(!r||m.rel==r)&&(!d||dclass(m.data)==d))
+ .sort((a,b)=>(a.country.startsWith("Saudi")?0:1)-(b.country.startsWith("Saudi")?0:1)||ord[a.rel]-ord[b.rel]);
+ $("#metab tbody").innerHTML=rows.map(m=>`<tr><td>${m.id}</td><td><a href="${m.url}" target="_blank" rel="noopener"><b>${esc(m.title)}</b></a><br><small class="m">${esc(m.authors)}${m.doi?" · doi:"+esc(m.doi):""}</small><br><small>${esc(m.note)}</small></td><td>${esc(m.uni)}</td><td>${cb(m.country)}</td><td>${m.year||"n.d."}</td><td>${rb(m.rel)}</td><td>${db(m.data)}</td><td>${m.email?`<span>${esc(m.email)}</span>`:"—"}</td><td><small class="m">${esc(m.verified)}</small></td></tr>`).join("")||`<tr><td colspan=9>No matches</td></tr>`}
+["#meq","#mec","#mer","#med"].forEach(s=>$(s).addEventListener("input",rme));rme();
+$("#medstab tbody").innerHTML=DATA.meds.map(d=>`<tr><td><a href="${d.url}" target="_blank" rel="noopener">${esc(d.name)}</a></td><td>${cb(d.country)}</td><td><span class="b open">${esc(d.lic)}</span></td><td>${esc(d.note)}</td></tr>`).join("");
+// irrigation
+function rir(){const q=$("#irq").value.toLowerCase(),f=$("#irf").value;$("#irtab tbody").innerHTML=DATA.irr.filter(x=>(!q||JSON.stringify(x).toLowerCase().includes(q))&&(!f||x[f]=="Yes"||x[f]=="Part"))
+ .map(x=>`<tr><td>${x.rank}</td><td><a href="${x.url}" target="_blank" rel="noopener">${esc(x.name)}</a></td>${["r1","r2","r3","r4","r5"].map(k=>`<td>${cov(x[k])}</td>`).join("")}<td>${esc(x.setting)}</td><td><span class="b c-ot">${esc(x.country)}</span></td></tr>`).join("")}
+["#irq","#irf"].forEach(s=>$(s).addEventListener("input",rir));rir();
+// iot
+[...new Set(DATA.iot.map(x=>x.cat))].forEach(c=>$("#iof").insertAdjacentHTML("beforeend",`<option>${esc(c)}</option>`));
+function rio(){const q=$("#ioq").value.toLowerCase(),f=$("#iof").value;$("#iotab tbody").innerHTML=DATA.iot.filter(x=>(!q||JSON.stringify(x).toLowerCase().includes(q))&&(!f||x.cat==f))
+ .map(x=>`<tr${x.cat.startsWith("F.")?' style="background:#f0fbf3"':''}><td>${x.n}</td><td><a href="${x.url}" target="_blank" rel="noopener">${esc(x.name)}</a></td><td>${esc(x.cat)}</td><td>${["Jordan","Iraq"].includes(x.country)?cb(x.country):`<span class="b c-ot">${esc(x.country)}</span>`}</td><td>${esc(x.lic)}</td></tr>`).join("")}
+["#ioq","#iof"].forEach(s=>$(s).addEventListener("input",rio));rio();
+// contacts
+[...new Set(CONTACTS.map(c=>c[2].startsWith("ME")?"Middle East":c[2]))].forEach(g=>$("#cof").insertAdjacentHTML("beforeend",`<option>${esc(g)}</option>`));
+function rco(){const q=$("#coq").value.toLowerCase(),f=$("#cof").value;$("#cotab tbody").innerHTML=CONTACTS.filter(c=>(!q||c.join(" ").toLowerCase().includes(q))&&(!f||(f=="Middle East"?c[2].startsWith("ME"):c[2]==f)))
+ .map(c=>`<tr><td><b>${esc(c[0])}</b></td><td>${esc(c[1])}</td><td>${c[2].startsWith("ME")?'<span class="b c-sa">ME</span> ':""}${esc(c[2])}</td><td>${esc(c[3])}</td><td><small class="m">${esc(c[4])}</small></td></tr>`).join("")}
+["#coq","#cof"].forEach(s=>$(s).addEventListener("input",rco));rco();
+</script></body></html>

@@ -1,0 +1,643 @@
+<html><head><meta charset='utf-8'><style>body{font-family:Helvetica,Arial,sans-serif;font-size:10.5px;line-height:1.45;color:#222;margin:0}
+h1{font-size:20px;color:#14532d;border-bottom:2px solid #14532d;padding-bottom:4px}
+h2{font-size:15px;color:#14532d;margin-top:20px}h3{font-size:12.5px;margin-top:14px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:9px}
+tr{page-break-inside:avoid}th,td{border:1px solid #bbb;padding:3px 5px;vertical-align:top;word-break:break-word}
+th{background:#e7f3ea}a{color:#0b5cad;word-break:break-all}code{background:#f2f2f2;padding:0 2px}</style></head><body><h1>Irrigation Research: Available Datasets, Sources and Contacts</h1>
+<p>Prepared 24–25 Oct 2026 for the Green Riyadh smart-irrigation study.
+All dataset URLs were checked on 24 Oct 2026. Only the Melbourne CSV and the Fairfield and City of Melbourne API field lists were opened directly. For the other datasets, the columns and coverage come from landing pages or READMEs and should be verified before use.</p>
+<h2>1. Data requirements (from the research-plan PDF)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Requirement</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>Metered irrigation water</td>
+<td>Per zone, event or day, in litres or m3, with zone area (m2) so L/m2/day can be computed. A missing meter record stays missing, never zero.</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>Soil moisture time series</td>
+<td>Hourly, per zone, with sensor_id, timestamp, unit and quality flag. Record volumetric content (%) or water potential (kPa).</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>Weather</td>
+<td>Rainfall, temperature, humidity, wind, radiation and reference evapotranspiration (ET0), hourly or daily.</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>Plant condition</td>
+<td>Stress score, survival, NDVI or turf quality, per tagged plant or zone over repeated visits.</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>Design and logs</td>
+<td>Smart vs comparison zones (matched pairs), baseline vs intervention phase, recommendation, actual action and override logs.</td>
+</tr>
+</tbody>
+</table>
+<p>Planned pilot: 24 zones in 12 matched pairs, 4 weeks baseline then 8 weeks intervention (84 days per zone, 2,016 zone-days), 5 tagged plants per zone with weekly visits (1,440 visits).</p>
+<p>Target file structure: zone register, daily analysis file (one row per zone-day), <code>sensor_log</code>, <code>irrigation_events</code>, <code>plant_health</code>.</p>
+<p><strong>Finding:</strong> no public dataset covers all five requirements. Nothing public has paired smart-vs-standard metered urban zones, and no public irrigation, soil-moisture or plant-condition data exists for Saudi Arabia or the Gulf.</p>
+<h2>2. Dataset catalogue (ranked by fit)</h2>
+<p>Coverage key: Yes = covered, Part = partly, No = not covered, ? = unverified.</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Dataset</th>
+<th>R1</th>
+<th>R2</th>
+<th>R3</th>
+<th>R4</th>
+<th>R5</th>
+<th>Setting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Melbourne Burnley turf</td>
+<td>Part</td>
+<td>Yes</td>
+<td>Part</td>
+<td>No</td>
+<td>Part</td>
+<td>Urban turf, temperate</td>
+</tr>
+<tr>
+<td>2</td>
+<td>DigiWaVe</td>
+<td>Part</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Part</td>
+<td>No</td>
+<td>Urban trees, Germany</td>
+</tr>
+<tr>
+<td>3</td>
+<td>TreeDataBase</td>
+<td>Part</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Urban trees, Central Europe</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Apulia precision irrigation</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Part</td>
+<td>Agricultural, Italy</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Parma tomato</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Part</td>
+<td>Part</td>
+<td>Yes</td>
+<td>Agricultural, Italy</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Tucson mesquite</td>
+<td>No</td>
+<td>Yes</td>
+<td>?</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Urban trees, semiarid</td>
+</tr>
+<tr>
+<td>7</td>
+<td>City of Melbourne soil sensors</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Municipal parks</td>
+</tr>
+<tr>
+<td>8</td>
+<td>SIMPaCT Sydney</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Park, Australia</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Paraguay strawberry</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Part</td>
+<td>Agricultural</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Maricopa cotton</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Agricultural, arid</td>
+</tr>
+<tr>
+<td>11</td>
+<td>HydroShare residential turf</td>
+<td>Part</td>
+<td>Part</td>
+<td>Part</td>
+<td>Part</td>
+<td>No</td>
+<td>Residential turf, USA</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Fairfield parks</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Municipal parks</td>
+</tr>
+</tbody>
+</table>
+<h3>2.1 Melbourne (Burnley) urban turf irrigation experiments</h3>
+<ul>
+<li><strong>Publisher:</strong> University of Melbourne (Cheung, Nice, Livesley), Zenodo</li>
+<li><strong>URLs:</strong> https://zenodo.org/records/10140669 and the companion https://zenodo.org/records/10972538 (2021 and 2022 data, modelled ET and energy balance). Plain curl returned 403; the page loads through a normal fetch.</li>
+<li><strong>Licence:</strong> CC BY 4.0</li>
+<li><strong>Size and time span:</strong> about 150 kB per hourly CSV; January 2022 in the first record. Melbourne, Australia.</li>
+<li><strong>Format:</strong> CSV, one file per treatment (no irrigation, single daytime, single night-time, multiple daytime, reference climate station).</li>
+<li><strong>Covers:</strong> hourly irrigation (mm); hourly soil moisture (m3/m3); wind, air temperature, vapour pressure, shortwave and longwave radiation; irrigated vs unirrigated arms and timing variants.</li>
+<li><strong>Lacks:</strong> litres and zone area, sensor_id and quality flag, rainfall and ET0 (first record), plant condition (surface temperature only), recommendation logs.</li>
+<li><strong>Use:</strong> best real urban-turf treatment-vs-control example, for import, join and scenario testing. Temperate climate, not arid.</li>
+</ul>
+<h3>2.2 DigiWaVe (urban tree water-demand forecasting)</h3>
+<ul>
+<li><strong>Publisher:</strong> Masasana AI and Kompetenzzentrum Wasser Berlin, Zenodo</li>
+<li><strong>URL:</strong> https://zenodo.org/records/21874569 (published 10 Aug 2026)</li>
+<li><strong>Licence:</strong> CC BY 4.0</li>
+<li><strong>Size:</strong> about 7.5 MB. <code>bad_oeynhausen.csv</code> has 10,400 rows (5 sites, 31 stations, Dec 2023 – Feb 2026). <code>city_b.csv</code> has 19,412 rows (10 sites, 71 stations, Mar 2021 – Sep 2023, unnamed German city).</li>
+<li><strong>Format:</strong> CSV plus a README in German.</li>
+<li><strong>Covers:</strong> daily median soil water tension at 30, 60 and 90 cm with pseudonymised station IDs; German weather service data with 1-, 7- and 14-day lookbacks; Sentinel-2 moisture indices; documented watering events.</li>
+<li><strong>Watering columns:</strong> the README defines <code>water_l</code> as litres ("0 = keine dokumentiert") and <code>water_lqm</code> as litres per m2 (Bad Oeynhausen only; each dose recorded in one of the two units). A zero in one column can still mean watering was recorded in the other. The README does not say how volumes were measured or what area a site covers.</li>
+<li><strong>Lacks:</strong> zone area, hourly resolution, designed treatment/control, quality flags (none seen).</li>
+<li><strong>Use:</strong> closest public analogue to urban-tree irrigation records.</li>
+</ul>
+<h3>2.3 TreeDataBase (urban tree soil moisture)</h3>
+<ul>
+<li><strong>Publisher:</strong> Maier et al. (25 authors), Zenodo and GitHub</li>
+<li><strong>URLs:</strong> https://zenodo.org/records/23022188 (V1.0.0, 28 Sep 2026); older version https://zenodo.org/records/23022189; https://github.com/pomestomi/TreeDataBase-public</li>
+<li><strong>Licence:</strong> MIT (the Zenodo record is typed as Software; a data paper is under review)</li>
+<li><strong>Size:</strong> 499 MB zip; georeferenced trees in Central European cities.</li>
+<li><strong>Covers:</strong> IoT soil moisture at 30, 60 and 90 cm; hourly gridded weather; derived irrigation-event and rain-event tables; land-use layers, topographic indices, soil lab analyses and photos.</li>
+<li><strong>Lacks:</strong> designed controls, plant-condition scores (photos only), zone area.</li>
+<li><strong>Use:</strong> large real import and join test and event-detection validation. The zip was not opened, so units and columns in the irrigation tables are unverified.</li>
+</ul>
+<h3>2.4 Apulia multi-sector precision-irrigation dataset (agricultural)</h3>
+<ul>
+<li><strong>Publisher:</strong> University of Bari and University of Salento, Mendeley Data</li>
+<li><strong>URL:</strong> https://doi.org/10.17632/c837v6p8ph (v2, 14 Sep 2026)</li>
+<li><strong>Licence:</strong> CC BY 4.0</li>
+<li><strong>Size:</strong> February – September 2025, Arnesano, Italy; 5 sectors (open-field tomato x2, potted tomato, zucchini, blueberry). Raw layer: 486,894 sensor readings and 3,055,944 valve-state records.</li>
+<li><strong>Format:</strong> CSV, README, DATA_DICTIONARY.md, Python code.</li>
+<li><strong>Covers:</strong> 789 reconstructed irrigation and fertigation events with applied water volume on a 10-minute grid (33,259 rows per sector); soil moisture, pH and EC with raw dropouts, flatlines and spikes preserved; ERA5 reanalysis weather; valve actuator telemetry; 24-hour-ahead soil-moisture target.</li>
+<li><strong>Lacks:</strong> zone area (not confirmed), plant condition, control design, recommendation logs.</li>
+<li><strong>Use:</strong> strongest public test of the metered-volume, event and sensor data model.</li>
+</ul>
+<h3>2.5 Parma tomato under different irrigation regimes (agricultural)</h3>
+<ul>
+<li><strong>Publisher:</strong> University of Parma, Mendeley Data (paper in Data in Brief, 2025)</li>
+<li><strong>URL:</strong> https://data.mendeley.com/datasets/35wh56287y/2 (doi 10.17632/35wh56287y.2)</li>
+<li><strong>Licence:</strong> CC BY 4.0</li>
+<li><strong>Size:</strong> summer 2023, Parma, Italy, sampled every 10 minutes.</li>
+<li><strong>Format:</strong> 4 CSVs (environmental, water meter, soil, daily agronomic indices).</li>
+<li><strong>Covers:</strong> water-meter volume (m3) per line; soil moisture, EC and temperature on three sensors; air temperature, RH, pressure and CO2; GDD and heat units; three lines at 100%, 60% and 30% of the Irriframe recommendation.</li>
+<li><strong>Lacks:</strong> rain, solar radiation, ET0, zone area, plant-stress scores.</li>
+<li><strong>Use:</strong> power and scenario work on a replicated-deficit design with metered volumes.</li>
+</ul>
+<h3>2.6 Tucson urban mesquite, active vs passive irrigation</h3>
+<ul>
+<li><strong>Publisher:</strong> Luketich (University of New Mexico and University of Arizona), Dryad (paper in PLOS One)</li>
+<li><strong>URL:</strong> https://datadryad.org/dataset/doi:10.5061/dryad.m0cfxpnzf</li>
+<li><strong>Licence:</strong> not read on the page (Dryad default is CC0)</li>
+<li><strong>Size:</strong> about 34 MB; 2017 and 2018 station files; Tucson, Arizona (semiarid).</li>
+<li><strong>Format:</strong> TXT</li>
+<li><strong>Covers:</strong> soil moisture at two depths (per the paper); canopy greenness and leaf area index; an irrigation-regime contrast. Weather is probable (files are named as weather stations) but not opened.</li>
+<li><strong>Lacks:</strong> metered volumes and a smart-irrigation design.</li>
+<li><strong>Use:</strong> arid urban trees with a plant-condition response, for analysis ideas.</li>
+</ul>
+<h3>2.7 City of Melbourne soil sensor readings</h3>
+<ul>
+<li><strong>Publisher:</strong> City of Melbourne Open Data</li>
+<li><strong>URL:</strong> https://data.melbourne.vic.gov.au/explore/dataset/soil-sensor-readings-historical-data/information/</li>
+<li><strong>Licence:</strong> CC BY</li>
+<li><strong>Size:</strong> 1,785,763 records, last modified 2022-08-22; a full 2023 attachment is also offered.</li>
+<li><strong>Format:</strong> CSV and JSON via API. Fields: <code>local_time, site_name, site_id, probe_id, probe_measure, soil_value, unit, year</code>.</li>
+<li><strong>Covers:</strong> soil moisture (%VWC), temperature and salinity. Joins to a sensor-locations dataset on <code>site_id</code>.</li>
+<li><strong>Use:</strong> realistic municipal long-format schema with sensor id and unit, a good fit for the <code>sensor_log</code> file.</li>
+</ul>
+<h3>2.8 SIMPaCT soil moisture dataset (Sydney Bicentennial Park)</h3>
+<ul>
+<li><strong>Publisher:</strong> Western Sydney University, Zenodo</li>
+<li><strong>URL:</strong> https://doi.org/10.5281/zenodo.16811020 (code: https://github.com/OliverObst/simpact-demo-data)</li>
+<li><strong>Licence:</strong> CC BY 4.0 (data), MIT (code)</li>
+<li><strong>Size:</strong> 2.3 MB zip; 13 sensors; hourly VWC from 15 Nov 2022 to 17 Jan 2023.</li>
+<li><strong>Covers:</strong> soil moisture only.</li>
+<li><strong>Notes:</strong> the paper (arXiv 2508.11700) describes zone-level irrigation set-points that operators accept or override, but those logs are not in the dataset. The full network has 202 sensors, 13 weather stations and about 200 controllable sprinkler stations; only this subset is public. The final report at https://simpact-australia.com/resources was not opened.</li>
+<li><strong>Use:</strong> sensor ingest and anomaly-flag testing.</li>
+</ul>
+<h3>2.9 Paraguay strawberry smart-irrigation control data (agricultural)</h3>
+<ul>
+<li><strong>Publisher:</strong> Universidad Loyola, Mendeley Data</li>
+<li><strong>URL:</strong> https://data.mendeley.com/datasets/cjb4vy4mzj/3</li>
+<li><strong>Licence:</strong> CC BY 4.0</li>
+<li><strong>Size:</strong> 12 Jul – 17 Sep 2022. Moisture 4,293 rows (about 20 min apart); flow meter 17,411 rows (about 5 min apart, cumulative litres); valve 17,427 rows.</li>
+<li><strong>Format:</strong> 3 two-column CSVs.</li>
+<li><strong>Covers:</strong> cumulative flow in litres, soil moisture, valve open/close state.</li>
+<li><strong>Lacks:</strong> weather, area, plant condition, control design.</li>
+<li><strong>Use:</strong> reconstructing events from cumulative flow and testing joins.</li>
+</ul>
+<h3>2.10 Maricopa precision cotton irrigation 2002–2023 (agricultural, arid)</h3>
+<ul>
+<li><strong>Publisher:</strong> USDA-ARS, Ag Data Commons</li>
+<li><strong>URL:</strong> https://agdatacommons.nal.usda.gov/articles/dataset/The_Maricopa_Precision_Cotton_Irrigation_Research_Data_2002-2023/33213621</li>
+<li><strong>Licence:</strong> public access; specific licence text not read, so check it.</li>
+<li><strong>Size:</strong> 17 experiment-years, Arizona.</li>
+<li><strong>Format:</strong> GeoJSON, shapefile and spreadsheet, with Python scripts and a data dictionary of 203 variables.</li>
+<li><strong>Covers:</strong> Experiment, Plot and Zone layers with irrigation-management treatments; more than 225,000 neutron-probe soil-water readings (manual, not continuous); AZMET weather; NDVI and canopy.</li>
+<li><strong>Lacks:</strong> urban setting, continuous sensors.</li>
+<li><strong>Use:</strong> power calculation and matched-plot and zone design in a hot, arid climate.</li>
+</ul>
+<h3>2.11 HydroShare residential turfgrass (Los Angeles, Salt Lake City, Tallahassee)</h3>
+<ul>
+<li><strong>Publisher:</strong> CUAHSI HydroShare</li>
+<li><strong>URLs:</strong> https://doi.org/10.4211/hs.490329fca2ce4c8bb2d5891c939e2050 and https://www.hydroshare.org/resource/490329fca2ce4c8bb2d5891c939e2050/</li>
+<li><strong>Licence:</strong> CC BY 4.0</li>
+<li><strong>Size:</strong> published 24 Aug 2025; residential yards stratified by income and NDVI.</li>
+<li><strong>Covers:</strong> irrigation depth per event and resident-reported frequency; temperature, RH and solar radiation; VWC at 0–5 cm; ET and grass surface temperature.</li>
+<li><strong>Lacks:</strong> continuous time series (visit snapshots), controls. File formats not checked.</li>
+<li><strong>Use:</strong> realistic urban-turf irrigation depth and ET for sanity checks.</li>
+</ul>
+<h3>2.12 Fairfield City Council parks moisture data (NSW)</h3>
+<ul>
+<li><strong>Publisher:</strong> Fairfield City Council</li>
+<li><strong>URL:</strong> https://data.fairfieldcity.nsw.gov.au/explore/dataset/bosnjak-park-data/</li>
+<li><strong>Licence:</strong> CC BY</li>
+<li><strong>Size:</strong> 72,047 records from June 2021 (last modified 17 Jun 2026), six parks.</li>
+<li><strong>Format:</strong> Opendatasoft API and CSV. Fields: <code>device_id, timestamp, site_name, soil_moisture_100mm, adjusted_soil_moisture</code>.</li>
+<li><strong>Covers:</strong> soil moisture only.</li>
+<li><strong>Use:</strong> minimal municipal sensor feed for testing ingest.</li>
+</ul>
+<h3>2.13 Lower priority</h3>
+<ul>
+<li><strong>Proxima Green turf:</strong> https://doi.org/10.15482/usda.adc/32050500 (USDA Ag Data Commons; licence not checked). Greenhouse bermudagrass at Maricopa with irrigation at 100%, 65% and 30% of ET and three nitrogen rates; NDVI, NDRE, NTEP visual quality and chlorophyll, but only 5 weekly visits and no soil-moisture series. The only turf plant-condition-under-deficit dataset found.</li>
+<li><strong>Amersfoort SmartCityTrees:</strong> https://zenodo.org/records/7860313, CC BY 4.0, 2021–2022 tree soil moisture, temperature and RH, 26.5 MB, no irrigation records.</li>
+<li><strong>Ulm Smart Green:</strong> https://datenhub.ulm.de/ckan/gl/dataset/smartgreen-ulm, JSON tree soil moisture at 2–3 depths; licence not read.</li>
+<li><strong>Kaggle <code>suneradilshan/smart-irrigation-training-data</code>:</strong> 15,420 rows, Apache 2.0, appears synthetic (described as collected/generated); no volume, area or time index. Only useful for pipeline smoke tests. A second Kaggle IoT page could not be read (captcha).</li>
+<li><strong>Mendeley smart-home garden:</strong> https://data.mendeley.com/datasets/jtsyb593fy/1, 960 rows over 20 days, a toy dataset.</li>
+<li><strong>USGS Fort Logan urban lawn:</strong> https://doi.org/10.5066/p9b70dc6, eddy-covariance ET, weather and soil moisture for 2011–2012, no irrigation metering.</li>
+</ul>
+<h2>3. Weather and ET0 sources (not irrigation datasets)</h2>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>URL</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NCM Weather API (Saudi)</td>
+<td>https://api-doc.ncm.gov.sa/en/api/getting-started</td>
+<td>Hourly station observations with <code>source=mix-obs</code>; Riyadh Al Dariyah station is <code>id_164</code>. Needs login credentials issued by email. Temperature and wind parameters confirmed; humidity, radiation, rainfall and ET0 not confirmed.</td>
+</tr>
+<tr>
+<td>CIMIS (California)</td>
+<td>https://data.ca.gov/dataset/cimis-weather-station-spatial-cimis-data-web-api</td>
+<td>Free with a registered API key. Station data from 1982, Spatial CIMIS daily ETo from 2003; hourly ETo from stations only.</td>
+</tr>
+<tr>
+<td>FAO WaPOR</td>
+<td>https://www.fao.org/aquastat/en/geospatial-information/wapor/</td>
+<td>Open; covers the Near East including Saudi Arabia; ET, rainfall and relative soil moisture at 100 m and 20 m. Satellite-derived.</td>
+</tr>
+<tr>
+<td>ICBA root-zone soil moisture (MENA)</td>
+<td>https://data.biosaline.org/en_AU/dataset/soil-moisture-data-v2</td>
+<td>Monthly NetCDF at 5 km from 2000, open data licence; too coarse for zone work.</td>
+</tr>
+<tr>
+<td>data.gov.sa</td>
+<td>(portal)</td>
+<td>Did not load from my computer, so unverified; search found no weather-station or ET0 dataset there.</td>
+</tr>
+</tbody>
+</table>
+<h2>4. Papers cited in the research plan: data status</h2>
+<table>
+<thead>
+<tr>
+<th>Paper</th>
+<th>Data status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gasser et al. 2024, LHB 110(1) 2294076 (doi 10.1080/27678490.2023.2294076)</td>
+<td>Not public; on request from the corresponding author</td>
+<td>24 parcels of 50–300 m2 (about 3,000 m2 total); about 7,000 m3 per year under the standard schedule; standard schedule is drip at 1 m3 per 90 min on Mon and Thu, sprinklers at 3 m3 on Mon, Wed and Fri.</td>
+</tr>
+<tr>
+<td>Gimpel et al. 2021, J. Cleaner Production 315, 128048</td>
+<td>No public dataset found</td>
+<td>18 sensors at 8 Frankfurt trees, Nov 2020 – Apr 2021. Paper's own data statement not checked.</td>
+</tr>
+<tr>
+<td>Rebholz et al. 2026, Electronic Markets 36, 72 (doi 10.1007/s12525-026-00926-8)</td>
+<td>No repository found in the part read</td>
+<td>Open access; describes 644 sensors at 161 Frankfurt trees. The NEWS software is open source (AGPLv3, "NEWS FLOW" on openCode GitLab, linked from the Fraunhofer FIT NEWS project page).</td>
+</tr>
+<tr>
+<td>Nautiyal et al. 2015, J. Irrig. Drain. Eng. 141(4) 04014062</td>
+<td>No public raw data</td>
+<td>24 homes in 6 clusters of 4 (SMS, ET, education, control); weekly meter reads, turf quality, NDVI. Reported weekly use: 15 mm (SMS), 21 mm (ET), 23 mm (education), 27 mm (control). NCSU thesis http://lib.ncsu.edu/resolver/1840.16/6385 has summary tables that could be digitised.</td>
+</tr>
+<tr>
+<td>UF/IFAS Orange County report</td>
+<td>No raw data found</td>
+<td>https://www.ocfl.net/Portals/0/Library/Board%20Of%20County%20Commissioners/docs/Smart%20Irrigation%20Study-CERT.pdf describes 167 homes with hourly irrigation meters; PDF text not read.</td>
+</tr>
+<tr>
+<td>Green Riyadh MDPI papers</td>
+<td>Data on request (per search result)</td>
+<td>https://www.mdpi.com/2073-4441/16/24/3559 and https://www.mdpi.com/2073-4441/17/18/2785 model ET0-based water demand; could not be opened (403).</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Author contacts (public sources only; nobody has been contacted)</h2>
+<p>Emails marked "snippet" came from a search-result summary and should be verified before sending.</p>
+<h3>5.1 Gasser et al. 2024 (priority 1)</h3>
+<table>
+<thead>
+<tr>
+<th>Person</th>
+<th>Role</th>
+<th>Contact</th>
+<th>LinkedIn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dr Morgan Abily (corresponding author)</td>
+<td>Maître de conférences, Université Côte d'Azur, Géoazur RISQUES</td>
+<td>abily@geoazur.unice.fr (T&amp;F article page and Géoazur staff page); ORCID 0000-0003-4162-586X. Older ICRA address mabily@icra.cat is stale.</td>
+<td>https://linkedin.com/in/morgan-abily-a15ba540 (high confidence)</td>
+</tr>
+<tr>
+<td>Franck Le Gall</td>
+<td>CEO and CTO, EGM (Valbonne)</td>
+<td>franck.le-gall@egm.io; +33 6 20 03 54 20; EGM main line +33 9 82 33 06 72</td>
+<td>https://linkedin.com/in/francklegall (high)</td>
+</tr>
+<tr>
+<td>L. Gasser</td>
+<td>Software engineer, EGM</td>
+<td>none public</td>
+<td>https://linkedin.com/in/gasserluc (medium)</td>
+</tr>
+</tbody>
+</table>
+<p>Route: write to Abily, copy Le Gall. Sources: <a href="https://www.tandfonline.com/doi/full/10.1080/27678490.2023.2294076">T&amp;F article</a>, <a href="https://dsiweb.oca.eu/fr/rech-risques-geoazur/4668-geo-equipe-risques-membres">Géoazur staff page</a>, <a href="https://www.aqua-valley.com/membres/membre/egm/">Aqua-Valley directory</a>.</p>
+<h3>5.2 SIMPaCT (Western Sydney University)</h3>
+<table>
+<thead>
+<tr>
+<th>Person</th>
+<th>Role</th>
+<th>Contact</th>
+<th>LinkedIn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Assoc. Prof. Oliver Obst (corresponding author)</td>
+<td>Robotics, UNSW Sydney since Jan 2026 (previously WSU)</td>
+<td>o.obst@unsw.edu.au (UNSW profile, personal page). The WSU address in the arXiv paper may be stale. Scholar: https://scholar.google.com/citations?user=m6n603wAAAAJ</td>
+<td>https://linkedin.com/in/oliverobst (high)</td>
+</tr>
+<tr>
+<td>Prof. Sebastian Pfautsch</td>
+<td>Director of SIMPaCT, Urban Management and Planning, WSU</td>
+<td>S.Pfautsch@westernsydney.edu.au; ORCID 0000-0002-4390-4195; Scholar https://scholar.google.com/citations?user=Iw8sJY4AAAAJ</td>
+<td>https://linkedin.com/in/sebastian-pfautsch (high)</td>
+</tr>
+<tr>
+<td>Prof. Bahman Javadi</td>
+<td>Networking and Cloud Computing, WSU</td>
+<td>email not found; https://researchers.westernsydney.edu.au/en/persons/bahman-javadi-jahantigh</td>
+<td>https://linkedin.com/in/bahmanjavadi (medium)</td>
+</tr>
+<tr>
+<td>Mesut Koçyiğit</td>
+<td>Former WSU data scientist, now apparently NSW DCCEEW</td>
+<td>none public; ORCID 0009-0004-8097-6472</td>
+<td>https://linkedin.com/in/mstkocyigit (medium)</td>
+</tr>
+<tr>
+<td>Russell Thomson</td>
+<td>The Analytical Edge, Tasmania (per arXiv footnote)</td>
+<td>not searched</td>
+<td>not searched</td>
+</tr>
+</tbody>
+</table>
+<p>Route: Obst, copy Pfautsch. Pfautsch also co-authored the SIMPaCT final report, which may hold deployment and operations data.</p>
+<h3>5.3 Hohenheim / FIM (Frankfurt trees)</h3>
+<p>The corresponding author of the 2021 and 2026 papers could not be confirmed (Springer and ScienceDirect blocked fetches; check the open-access <a href="https://link.springer.com/article/10.1007/s12525-026-00926-8">Springer page</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Person</th>
+<th>Role</th>
+<th>Contact</th>
+<th>LinkedIn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prof. Dr Henner Gimpel</td>
+<td>Chair of Digital Management, Uni Hohenheim; Director at FIM; Fraunhofer FIT</td>
+<td>henner.gimpel@fim-rc.de; +49 711 459 24051; henner.gimpel@fit.fraunhofer.de; digital@uni-hohenheim.de for publication requests</td>
+<td>https://linkedin.com/in/henner-gimpel (high)</td>
+</tr>
+<tr>
+<td>Feline Schnaak</td>
+<td>PhD candidate, FIM and Fraunhofer FIT Augsburg; second author 2026</td>
+<td>feline.schnaak@fim-rc.de; +49 821 480400 29; feline.schnaak@uni-hohenheim.de (snippet); ORCID 0000-0002-3712-5291</td>
+<td>https://linkedin.com/in/felineschnaak (high)</td>
+</tr>
+<tr>
+<td>Dominik Rebholz</td>
+<td>First author 2026; NEWS project</td>
+<td>no confirmed email; dominik.rebholz@hs-kempten.de (low confidence, may be a different person); ORCID 0009-0003-8769-0365</td>
+<td>https://linkedin.com/in/dominik-rebholz (medium)</td>
+</tr>
+<tr>
+<td>Dr Valerie Graf-Drasch</td>
+<td>Co-author 2021</td>
+<td>valerie.graf-drasch@uni-hohenheim.de (snippet, unverified); ORCID 0000-0002-2338-8373</td>
+<td>https://linkedin.com/in/dr-valerie-graf-drasch-795b39194 (medium)</td>
+</tr>
+<tr>
+<td>Hawlitschek, Neumeier</td>
+<td>2021 co-authors</td>
+<td>not researched</td>
+<td>not researched</td>
+</tr>
+</tbody>
+</table>
+<p>Route: Gimpel, copy Schnaak and Rebholz.</p>
+<h3>5.4 Nautiyal et al. 2015 (NC State)</h3>
+<table>
+<thead>
+<tr>
+<th>Person</th>
+<th>Role</th>
+<th>Contact</th>
+<th>LinkedIn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dr Garry L. Grabow, P.E.</td>
+<td>Project lead, Professor (emeritus per campus directory), BAE</td>
+<td>glgrabow@ncsu.edu; 919-515-8242; https://bae.ncsu.edu/people/glgrabow/</td>
+<td>none found</td>
+</tr>
+<tr>
+<td>Rodney Huffman</td>
+<td>BAE emeritus faculty</td>
+<td>huffman@ncsu.edu</td>
+<td>none found</td>
+</tr>
+<tr>
+<td>Grady Miller</td>
+<td>Turfgrass extension, Crop and Soil Sciences</td>
+<td>grady_miller@ncsu.edu (snippet only)</td>
+<td>not searched</td>
+</tr>
+<tr>
+<td>Daniel Bowman</td>
+<td>Turfgrass professor, retired</td>
+<td>dan_bowman@ncsu.edu (snippet only)</td>
+<td>not searched</td>
+</tr>
+<tr>
+<td>M. (Mayank?) Nautiyal</td>
+<td>Former graduate student (2010 thesis); first name unconfirmed</td>
+<td>none public</td>
+<td>none found</td>
+</tr>
+</tbody>
+</table>
+<p>Route: Grabow (best for raw weekly meter and NDVI data), copy Huffman.</p>
+<h3>5.5 Melbourne Burnley turf datasets</h3>
+<table>
+<thead>
+<tr>
+<th>Person</th>
+<th>Role</th>
+<th>Contact</th>
+<th>LinkedIn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dr Pui Kwan (Paul) Cheung (corresponding author)</td>
+<td>Former WSU postdoc; University of Melbourne PhD</td>
+<td>cheung.p@unimelb.edu.au (printed in papers; probably no longer current); ORCID 0000-0002-7774-9277</td>
+<td>https://linkedin.com/in/paulpkcheung (high)</td>
+</tr>
+<tr>
+<td>Prof. Stephen Livesley</td>
+<td>Urban Horticulture, University of Melbourne (Burnley)</td>
+<td>sjlive@unimelb.edu.au; ORCID 0000-0003-3506-2458</td>
+<td>none found</td>
+</tr>
+<tr>
+<td>Dr Kerry Nice</td>
+<td>Urban climate researcher</td>
+<td>kerry.nice@unimelb.edu.au (a search summary says his Melbourne post ended Sep 2026, unverified); https://mothlight.github.io/</td>
+<td>https://linkedin.com/in/kerrynice (high)</td>
+</tr>
+<tr>
+<td>Dr Naika Meili</td>
+<td>National University of Singapore (record 10972538)</td>
+<td>none found; ORCID 0000-0001-6283-2134</td>
+<td>not searched</td>
+</tr>
+</tbody>
+</table>
+<p>Route: Cheung, copy Livesley (best for plot and zone metadata).</p>
+<h3>5.6 DigiWaVe</h3>
+<table>
+<thead>
+<tr>
+<th>Person</th>
+<th>Role</th>
+<th>Contact</th>
+<th>LinkedIn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tobias Freund</td>
+<td>Zenodo creator, Masasana AI</td>
+<td>info@masasana.ai; +49 (0)2161 9850742 (Mönchengladbach); https://masasana.ai/use-cases/digiwave</td>
+<td>https://linkedin.com/in/tobias-freund-b67851273 (medium)</td>
+</tr>
+<tr>
+<td>Dr.-Ing. Ulf Miehe</td>
+<td>Group leader, water treatment and reuse, Kompetenzzentrum Wasser Berlin</td>
+<td>ulf.miehe@kompetenz-wasser.de; +49 30 53 653 821; https://kompetenz-wasser.de/de/ueber-uns/team/ulf-miehe</td>
+<td>not searched</td>
+</tr>
+</tbody>
+</table>
+<p>Route: info@masasana.ai addressed to Tobias Freund, copy Miehe.</p>
+<h2>6. Gaps and suggested plan</h2>
+<ul>
+<li><strong>Paired smart-vs-standard metered urban zones:</strong> none public. Nearest are the NC homes (Nautiyal) and Orange County homes, neither with downloadable data, then the Melbourne experiments (treatment arms but no litres or area).</li>
+<li><strong>Arid Gulf or Saudi data:</strong> none found for irrigation, soil moisture or plant condition.</li>
+<li><strong>Recommendation and override logs:</strong> none public (SIMPaCT and Frankfurt describe them but do not release them).</li>
+<li><strong>Search coverage:</strong> Dryad, Harvard Dataverse, UCI and data.gov were searched only with general web queries; PANGAEA and EU open data were not searched specifically.</li>
+<li><strong>Hybrid test set:</strong> Apulia for the metered-volume schema, Melbourne for treatment contrasts, DigiWaVe or TreeDataBase for trees, and NCM Riyadh weather (with ET0 computed from it) to localise.</li>
+<li><strong>Author requests:</strong> ask Gasser (via Abily and Le Gall) and SIMPaCT (via Obst) for parcel-level data and override logs; digitise the Nautiyal thesis tables for power calculations.</li>
+<li><strong>Next steps:</strong> download the top datasets, check columns against the file specs, and build a sample joined dataset in the zone-day format.</li>
+</ul></body></html>
