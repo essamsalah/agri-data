@@ -38,6 +38,20 @@ input,select{padding:8px 10px;border:1px solid #b9d7b9;border-radius:6px;font-si
 .bar{height:8px;background:#e8f0e8;border-radius:4px;margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--g4)}
 ul.gaps li{margin:6px 0}.files a{display:inline-block;margin:4px 10px 4px 0}
 small.m{color:var(--mut)}footer{text-align:center;color:var(--mut);padding:20px;font-size:12px}
+
+#mapwrap{position:relative;background:#cfe8dc;border:1px solid #cfe5d3;border-radius:8px;overflow:hidden}
+#worldmap{display:block;width:100%;height:auto;background:#cfe8dc}
+#worldmap .land{fill:#eef7ee;stroke:#81c784;stroke-width:.35}
+#worldmap .pin{cursor:pointer}
+#worldmap .pin:focus{outline:none}
+#worldmap .pin:focus circle{stroke:#0b3d20;stroke-width:2}
+#mappop{position:absolute;display:none;background:#fff;border:1px solid #cfe5d3;border-radius:8px;padding:10px 12px;width:min(280px,82%);box-shadow:0 6px 18px rgba(11,61,32,.15);z-index:4;font-size:12.5px}
+#mappop h4{margin:6px 0 4px;font-size:13px}
+#mappop p{margin:3px 0}
+#mappop hr{border:0;border-top:1px solid #e3efe3;margin:8px 0}
+.mapleg{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:0 0 10px}
+.mapleg label{display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none}
+.mapleg i{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
 @media(max-width:700px){header,main,nav{padding-left:14px;padding-right:14px}header h1{font-size:21px}}
 </style></head><body>
 <header>
@@ -46,9 +60,30 @@ small.m{color:var(--mut)}footer{text-align:center;color:var(--mut);padding:20px;
 <p><span class="tag">24 zones · 12 matched pairs</span><span class="tag">4-wk baseline + 8-wk intervention</span><span class="tag">2,016 zone-days</span><span class="tag">Difference-in-differences</span><span class="tag">Pairs = replicates (no pseudoreplication)</span></p>
 <p><small>Updated __TODAY__ · All sources public · Nobody has been contacted</small></p>
 </header>
-<nav><a href="#design">Design</a><a href="#req">R1–R5</a><a href="#me">Middle East research</a><a href="#irr">Irrigation datasets</a><a href="#iot">IoT datasets</a><a href="#contacts">Contacts</a><a href="#gaps">Gaps &amp; next steps</a><a href="#files">Files</a></nav>
+<nav><a href="#design">Design</a><a href="#map">Map</a><a href="#req">R1–R5</a><a href="#me">Middle East research</a><a href="#irr">Irrigation datasets</a><a href="#iot">IoT datasets</a><a href="#contacts">Contacts</a><a href="#gaps">Gaps &amp; next steps</a><a href="#files">Files</a></nav>
 <main>
 <div class="cards" id="cards"></div>
+<section id="map"><h2>Dataset locations</h2>
+<p>Pins mark documented field or city names from the dataset notes (OpenStreetMap and Wikipedia, checked 5 Nov 2026). Sites with only a country, an unnamed city, or an unverified location are listed below rather than guessed.</p>
+<div class="mapleg" id="mapfilters">
+<label><input type="checkbox" data-kind="irrigation" checked> <i style="background:#1565c0"></i> Irrigation</label>
+<label><input type="checkbox" data-kind="iot" checked> <i style="background:#2e7d32"></i> IoT</label>
+<label><input type="checkbox" data-kind="me" checked> <i style="background:#f9a825"></i> Open Middle East / N. Africa</label>
+<label><input type="checkbox" data-kind="pilot" checked> <i style="background:#c62828"></i> Planned pilot</label>
+<small class="m" id="mapcount"></small>
+</div>
+<div id="mapwrap">
+<svg id="worldmap" viewBox="0 0 1000 500" role="img" aria-label="World map of dataset locations">
+<rect width="1000" height="500" fill="#cfe8dc"/>
+<path class="land" d="__WORLD_PATH__"/>
+<g id="pins"></g>
+</svg>
+<div id="mappop" class="popup"></div>
+</div>
+<h3>Not pinned</h3>
+<p><small class="m">These remain on the lists above; they are omitted from the map because a specific place was not named or could not be verified.</small></p>
+<div class="tw"><table id="unmap"><thead><tr><th>Dataset</th><th>Group</th><th>Why it is not on the map</th></tr></thead><tbody></tbody></table></div>
+</section>
 <section id="design"><h2>Study design</h2><div class="design">
 <div><b>Units</b>24 irrigation zones in 12 matched pairs (treatment = AIoT recommendation, control = standard practice)</div>
 <div><b>Timeline</b>4-week baseline (both arms standard) then 8-week intervention</div>
@@ -172,4 +207,80 @@ function rio(){const q=$("#ioq").value.toLowerCase(),f=$("#iof").value;$("#iotab
 function rco(){const q=$("#coq").value.toLowerCase(),f=$("#cof").value;$("#cotab tbody").innerHTML=CONTACTS.filter(c=>(!q||c.join(" ").toLowerCase().includes(q))&&(!f||(f=="Middle East"?c[2].startsWith("ME"):c[2]==f)))
  .map(c=>`<tr><td><b>${esc(c[0])}</b></td><td>${esc(c[1])}</td><td>${c[2].startsWith("ME")?'<span class="b c-sa">ME</span> ':""}${esc(c[2])}</td><td>${esc(c[3])}</td><td><small class="m">${esc(c[4])}</small></td></tr>`).join("")}
 ["#coq","#cof"].forEach(s=>$(s).addEventListener("input",rco));rco();
+
+// map
+(function(){
+  const kinds={irrigation:"Irrigation",iot:"IoT",me:"Open ME / N. Africa",pilot:"Planned pilot"};
+  const colors={irrigation:"#1565c0",iot:"#2e7d32",me:"#f9a825",pilot:"#c62828"};
+  const ns="http://www.w3.org/2000/svg";
+  const g=document.getElementById("pins"), pop=document.getElementById("mappop"), wrap=document.getElementById("mapwrap");
+  const checks=[...document.querySelectorAll("#mapfilters input")];
+  const proj=(lat,lon)=>[(lon+180)/360*1000,(90-lat)/180*500];
+  function selected(){const on=new Set(checks.filter(c=>c.checked).map(c=>c.dataset.kind));return DATA.map.filter(p=>on.has(p.kind))}
+  function nodes(items){
+    const m=new Map();
+    for(const it of items){const k=it.lat.toFixed(5)+","+it.lon.toFixed(5);if(!m.has(k))m.set(k,{lat:it.lat,lon:it.lon,items:[]});m.get(k).items.push(it)}
+    const out=[...m.values()].map(n=>{const [x,y]=proj(n.lat,n.lon);return Object.assign(n,{x,y})});
+    for(let iter=0;iter<40;iter++){
+      for(let i=0;i<out.length;i++)for(let j=i+1;j<out.length;j++){
+        let dx=out[j].x-out[i].x,dy=out[j].y-out[i].y,d=Math.hypot(dx,dy)||0.01;
+        if(d<12){const p=(12-d)/2;dx/=d;dy/=d;out[i].x-=dx*p;out[i].y-=dy*p;out[j].x+=dx*p;out[j].y+=dy*p}
+      }
+    }
+    out.forEach(n=>{n.x=Math.min(994,Math.max(6,n.x));n.y=Math.min(494,Math.max(6,n.y))});
+    return out;
+  }
+  function hide(){pop.style.display="none"}
+  function show(n,ev){
+    pop.innerHTML=n.items.map(it=>{
+      const fg=it.kind==="me"||it.kind==="pilot"?"#1a2a1d":"#fff";
+      const title=it.url?`<a href="${it.url}" target="_blank" rel="noopener">${esc(it.name)}</a>`:esc(it.name);
+      return `<div><span class="b" style="background:${colors[it.kind]};color:${fg}">${esc(kinds[it.kind])}</span><h4>${title}</h4><p>${esc(it.place)}</p>${it.note?`<p><small class="m">${esc(it.note)}</small></p>`:""}</div>`
+    }).join("<hr>");
+    pop.style.display="block";
+    const r=wrap.getBoundingClientRect();
+    let left=ev.clientX-r.left+12, top=ev.clientY-r.top+12;
+    requestAnimationFrame(()=>{
+      const pw=pop.offsetWidth, ph=pop.offsetHeight;
+      if(left+pw>r.width-8) left=Math.max(8, ev.clientX-r.left-pw-12);
+      if(top+ph>r.height-8) top=Math.max(8, ev.clientY-r.top-ph-12);
+      pop.style.left=left+"px"; pop.style.top=top+"px";
+    });
+  }
+  function draw(){
+    hide(); g.replaceChildren();
+    const items=selected();
+    document.getElementById("mapcount").textContent=`${items.length} pin${items.length===1?"":"s"} · ${DATA.unmap.length} not pinned`;
+    nodes(items).forEach(n=>{
+      const same=n.items.every(i=>i.kind===n.items[0].kind);
+      const kind=same?n.items[0].kind:"mixed";
+      const fill=kind==="mixed"?"#5d4037":colors[kind];
+      const el=document.createElementNS(ns,"g");
+      el.setAttribute("class","pin");
+      el.setAttribute("transform",`translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`);
+      el.setAttribute("tabindex","0");
+      el.setAttribute("role","button");
+      el.setAttribute("aria-label",n.items.map(i=>i.name+" — "+i.place).join("; "));
+      const c=document.createElementNS(ns,"circle");
+      c.setAttribute("r", n.items.some(i=>i.kind==="pilot")&&n.items.length===1?"7":"5.5");
+      c.setAttribute("fill", fill); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1.4");
+      el.appendChild(c);
+      if(n.items.length>1){
+        const tx=document.createElementNS(ns,"text");
+        tx.setAttribute("text-anchor","middle"); tx.setAttribute("dy","3.5");
+        tx.setAttribute("font-size","8"); tx.setAttribute("font-weight","700"); tx.setAttribute("fill","#fff");
+        tx.textContent=String(n.items.length); el.appendChild(tx);
+      }
+      const open=e=>{e.stopPropagation(); show(n,e.clientX?e:{clientX:wrap.getBoundingClientRect().left+n.x*wrap.clientWidth/1000, clientY:wrap.getBoundingClientRect().top+n.y*wrap.clientHeight/500})};
+      el.addEventListener("click",open);
+      el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open(e)}});
+      g.appendChild(el);
+    });
+  }
+  checks.forEach(c=>c.addEventListener("change",draw));
+  document.getElementById("worldmap").addEventListener("click",hide);
+  draw();
+  document.querySelector("#unmap tbody").innerHTML=DATA.unmap.map(u=>`<tr><td>${u.url?`<a href="${u.url}" target="_blank" rel="noopener">${esc(u.name)}</a>`:esc(u.name)}</td><td>${esc(u.kind)}</td><td>${esc(u.reason)}</td></tr>`).join("");
+})();
+
 </script></body></html>

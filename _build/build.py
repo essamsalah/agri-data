@@ -1,7 +1,7 @@
 import json, re, subprocess, markdown, os
-from data import ME, ME_DATASETS, IRR, IOT
+from data import ME, ME_DATASETS, IRR, IOT, MAP, UNMAPPED
 P="/workspace/green-riyadh-project"
-TODAY="1 November 2026 (Asia/Riyadh, UTC+3)"
+TODAY="5 November 2026 (Asia/Riyadh, UTC+3)"
 CSS="""body{font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.45;color:#1b2b1b;margin:24px}
 h1{color:#1b5e20;font-size:20px}h2{color:#2e7d32;font-size:15px;border-bottom:2px solid #a5d6a7;padding-bottom:3px;margin-top:22px}h3{color:#388e3c;font-size:13px}
 table{border-collapse:collapse;width:100%;margin:8px 0;font-size:9.5px}th,td{border:1px solid #c8e6c9;padding:4px 5px;vertical-align:top;text-align:left}
@@ -101,8 +101,10 @@ Nobody has been contacted and nothing has been sent.
 open(f"{P}/README.md","w").write(R)
 # ---------- dashboard ----------
 D=dict(me=ME,meds=ME_DATASETS,irr=[dict(rank=r[0],name=r[1],r1=r[2],r2=r[3],r3=r[4],r4=r[5],r5=r[6],setting=r[7],url=r[8],country=r[9]) for r in IRR],
-       iot=[dict(n=r[0],name=r[1],cat=r[2],country=r[3],lic=r[4],url=r[5]) for r in IOT])
+       iot=[dict(n=r[0],name=r[1],cat=r[2],country=r[3],lic=r[4],url=r[5]) for r in IOT],
+       map=MAP,unmap=UNMAPPED)
 tpl=open("dashboard_template.html").read()
-html=tpl.replace("/*__DATA__*/","const DATA="+json.dumps(D,ensure_ascii=False)+";").replace("__TODAY__",TODAY).replace("__NME__",str(len(ME)))
+world=open("world_land_path.txt").read().strip()
+html=tpl.replace("/*__DATA__*/","const DATA="+json.dumps(D,ensure_ascii=False)+";").replace("__TODAY__",TODAY).replace("__NME__",str(len(ME))).replace("__WORLD_PATH__",world)
 open(f"{P}/index.html","w").write(html)
-print("built", len(ME))
+print("built", len(ME), "map", len(MAP), "unmap", len(UNMAPPED))
